@@ -1,3 +1,77 @@
 #app-login-btn {
   width: 160px;
 }
+
+.task-manager {
+  max-width: 1235px;
+  margin: 10px auto;
+  background-color: #0079BF;
+}
+
+footer, header {
+  height: 55px;
+  background-color: #0067A3;
+  color: #FFFFFF;
+  padding: 1px 20px;
+}
+
+.todoField {
+  background-color: #EBECF0;
+  margin: 8px;
+  max-height: 556px;
+  overflow-y: auto;
+  border-radius: 8px;
+}
+
+/* кастомизация скрола */
+.todoField::-webkit-scrollbar-track {border-radius: 5px;}
+.todoField::-webkit-scrollbar {width: 12px;}
+.todoField::-webkit-scrollbar-thumb {border-radius: 5px;}
+.todoField:hover::-webkit-scrollbar-thumb {background: #CBCBCB;}
+
+.main-content {
+  height: 590px;
+  padding: 10px 22px; 
+}
+
+.btn-add {
+  border: none;
+  width: 100%;
+  background-color: #EBECF0;
+  text-align: left;
+  padding-left: 0;
+  margin: 5px auto;  
+}
+
+.btn-submit{
+  background-color: #0079BF;
+  color: #FFFFFF;
+  border: none;
+  width: 50% ;
+  border-radius: 6px;
+  padding-right: 0;
+  margin: 8px 0;
+  
+}
+
+#inputField , .description {
+  border: none;
+  border-radius: 6px;
+  background-color: #FFFFFF;
+  margin: 8px 0;
+  padding: 5px 10px;
+}
+
+#inputField {
+  width: 100%;
+}
+
+.description {
+  word-wrap: break-word ;
+  display: inline-block;
+}
+
+.add-todo-wrapper {
+  
+  
+}
