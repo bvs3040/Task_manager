@@ -1,6 +1,6 @@
 import { User } from "./models/User";
 import { Task } from "./models/Task";
-import { todoWrapper, btnWrapper } from "./app";
+import { todoWrapper, btnWrapper, inputWrapper } from "./app";
 import { appState } from "./app";
 import { trueUser, tasksArr, usersArr } from "./app";
 
@@ -18,48 +18,57 @@ export const addToStorage = function (obj, key) {
 
 export const generateTestUser = function (User) {
   //localStorage.clear();
-  const testUser = new User("testUser4", "test123");
+  const testUser = new User("testUser3", "test123");
   User.save(testUser);
 };
 
 // создаем кнопку submit и поле ввода
 
 export const addInp = function () {
-  const inputWrapper = document.querySelector('.input-wrapper');
   inputWrapper.innerHTML = `<input id="inputField" type="text" placeholder = "введите задачу" autofocus autocomplete = "off" > `;
   btnWrapper.innerHTML = `<button class ="btn-submit"> Submit </button> `;
   document.querySelector('.btn-submit').addEventListener('click', addToDo);
+}
+
+//сохранение изменений в todo листе
+export const saveChadgeToDoList = function () {
+  trueUser.toDo = tasksArr;
+  localStorage.setItem(trueUser.storageKey, JSON.stringify(usersArr));
 }
 
 // создаем тудушки из поля ввода
 
 export const addToDo = function () {
   let description = document.querySelector('#inputField').value;
-  document.querySelector('#inputWrapper').value = "";
   if (description) {
-    todoWrapper.innerHTML += `<div class = "description"> ${description} </div> <br>`;
     tasksArr.push(new Task(description));
-    trueUser.toDo = tasksArr;
-    for (let user of usersArr) {
-      if (trueUser.id == user.id) {
-        user = trueUser;
-        localStorage.clear();
-        localStorage.setItem(user.storageKey, JSON.stringify(usersArr));
-        break;
-      };
-    }; 
+    saveChadgeToDoList();
   };
-  inputWrapper.outerHTML = '';
+  inputWrapper.innerHTML = '';
   btnWrapper.innerHTML = `<button class="btn-add">+Add card</button>`; 
+  fillHtmlList();
   document.querySelector('.btn-add').addEventListener('click', addInp);
 }
 
-//заполнение todo листа из localstorage
+//заполнение todo листа 
 export const fillHtmlList = () => {
+  console.log('обновляем список')
   todoWrapper.innerHTML = '';
   if (tasksArr.length > 0) {
     tasksArr.forEach((item, index) => {
-      todoWrapper.innerHTML += `<div class = "description"> ${item.description} </div> <br>`;
+      todoWrapper.innerHTML += `<div  class = "description"> ${item.description} </div> <br>`;
     });
   };
 };
+
+//изменение  задачи
+export const changeTask = (event) =>{
+  let changedTask = event.target;
+  if (changedTask == todoWrapper) return;
+ // todoWrapper.removeEventListener ('click', changeTask );
+ // changedTask.innerHTML += 
+//document.querySelector('.dropdown-toggle').addEventListener 
+    console.log(changedTask) 
+ // saveChadgeToDoList();
+ //todoWrapper.addEventListener ('click', changeTask );
+}

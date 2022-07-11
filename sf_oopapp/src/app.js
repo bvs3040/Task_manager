@@ -11,14 +11,19 @@ import { addToDo } from "./utils";
 import { Task } from "./models/Task";
 import { fillHtmlList } from "./utils";
 import { getFromStorage } from "./utils";
+import { changeTask } from "./utils";
+
 
 
 export const appState = new State();
+
 export let trueUser; //авторизованный юзер
 export let usersArr;    //массив юзеров из Localstorage
 export let tasksArr;    //массив задач авторизованного юзера
 export let todoWrapper; //div для вывода задач
 export let btnWrapper;  //div для кнопки Add/Submit
+export let inputWrapper; //div для поля ввода
+
 
 //generateTestUser(User);
 
@@ -39,28 +44,28 @@ loginForm.addEventListener("submit", function (e) {
 
   //получаем авторизованного юзера из базы
   usersArr = getFromStorage(appState._currentUser.storageKey);
-  for (let user of usersArr) {
+  usersArr.forEach((user, index) => {
     if (user.login == login && user.password == password) {
       trueUser = user;
-      break;
+      return ;
     };
-  }; 
+  }); 
 
-  //получаем массив заданий
-  tasksArr = trueUser.toDo ?  trueUser.toDo  : [] ;
-
-  // отбражение заданий из local storage
-  todoWrapper = document.querySelector('.todos-wrapper-ready');
-  fillHtmlList();
- 
-  // создаем кнопку
-  btnWrapper = document.querySelector('.btn-wrapper')
+  tasksArr = trueUser.toDo ?  trueUser.toDo  : [] ; //получаем массив заданий
+  todoWrapper = document.querySelector('.todos-wrapper-ready'); 
+  todoWrapper.addEventListener ('click', changeTask ); //обработчик для действий с задачами
+  
+  fillHtmlList();           
+  
+  btnWrapper = document.querySelector('.btn-wrapper'); // создаем кнопку
   btnWrapper.innerHTML = `<button class="btn-add">+Add card</button>`;
+  
+  inputWrapper = document.querySelector('.input-wrapper'); // создаем поле ввода задач
   
   // меняем вид кнопки, создаем тудушки
   document.querySelector('.btn-add').addEventListener ('click', addInp);
   document.querySelector ('.btn-submit').addEventListener('click', addToDo);    
-  
+
 });
 
 
